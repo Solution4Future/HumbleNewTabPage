@@ -1,5 +1,5 @@
 {
-	"name": "Humble New Tab Page (S4F DEV)",
+	"name": "Humble New Tab Page",
 	"version": "1.19",
 	"minimum_chrome_version": "37",
 	"manifest_version": 2,
@@ -9,7 +9,6 @@
 		 "48": "icon_48.png",
 		 "16": "icon_16.png"
 	},
-	"key": "chdiiefegemicoonloodbkbmapfmcnhp",
 	"permissions": [
 		"bookmarks",
 		"chrome://favicon/",
