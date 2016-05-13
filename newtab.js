@@ -1756,7 +1756,7 @@ function initSettings() {
 			nav.children[index].firstChild.classList.add('current');
 			options.getElementsByClassName('section')[index].classList.add('current');
 			// show custom css on advanced tab
-			if (index == nav.children.length-1) {
+			if (index === nav.children.length-2) {
 				var allcss = document.getElementById('all_css');
 				allcss.value = '';
 				for (var key in config) {
@@ -1765,6 +1765,49 @@ function initSettings() {
 						allcss.value +=  css + '\n';
 				}
 			}
+			// import/export
+ 			if (index === nav.children.length-1) {
+ 				var exports = document.getElementById('sync_export');
+ 				var imports = document.getElementById('sync_import');
+
+				function setNotification(node, text) {
+					node.parentNode.children[1].innerHTML = text || "&nbsp;";
+				}
+
+				setNotification(exports, "");
+				setNotification(imports, "");
+
+ 				exports.onclick = function() {
+					var values = {};
+					for (var i = 0, len = localStorage.length; i < len; ++i) {
+						var key = localStorage.key(i);
+						values[key] = localStorage.getItem(key);
+					}
+					chrome.storage.sync.set({"data" : values}, function() {
+						setNotification(imports, "");
+						setNotification(exports, chrome.runtime.lastError ? chrome.runtime.lastError.message : "Settings synchronized");
+					});
+ 				}
+
+ 				imports.onclick = function() {
+					chrome.storage.sync.get("data", function(items) {
+						setNotification(exports, "");
+						if (chrome.runtime.lastError) {
+							setNotification(imports, chrome.runtime.lastError.message);
+						} else {
+							localStorage.clear();
+							for(var key in items.data) {
+								localStorage.setItem(key, items.data[key]);
+							}
+							loadSettings();
+							loadColumns();
+							setNotification(imports, "Settings synchronized");
+						}
+					});
+ 				}
+ 			}
+			
+			
 			return false;
 		};
 	}

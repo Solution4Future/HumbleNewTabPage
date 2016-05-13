@@ -168,6 +168,7 @@ body {
 	margin-left: 10em;
 	margin-top: -1px;
 	padding: 1px 0;
+	min-height: 180px;
 	background-color: #FAFAFA;
 	display: none;
 }
@@ -211,11 +212,23 @@ label {
 	margin: 0 0 .1em 1.4em;
 	clear: left;
 }
+label.inverted {
+	text-align: left;
+	margin: 0 1.4em .1em 0;
+	clear: right;
+}
 label span {
 	float: left;
 	text-align: left;
 	max-width: 10.9em;
 	line-height: 1.9;
+	overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+label.inverted span {
+	float: right;
+	text-align: right;
 }
 input, select, textarea, .revert {
 	width: 9em;
